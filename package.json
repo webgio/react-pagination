@@ -1,0 +1,19 @@
+{
+  "name": "react-pagination",
+  "version": "1.0.0",
+  "description": "sample react component to mimic a angular directive",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/webgio/react-pagination.git"
+  },
+  "author": "Giorgio Bozio",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/webgio/react-pagination/issues"
+  },
+  "homepage": "https://github.com/webgio/react-pagination"
+}
