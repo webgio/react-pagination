@@ -22,32 +22,27 @@ var List = React.createClass({
 var PageLinks = React.createClass({
   render: function(){
     var currentPage = this.props.currentPage
-    var nextPage = this.props.currentPage + 1
-    var prevPage = this.props.currentPage - 1
-    var totalPages = this.props.totalPages
-    var onChangePage = this.props.onChangePage
-    var navLinks = []
+      , nextPage = this.props.currentPage + 1
+      , prevPage = this.props.currentPage - 1
+      , totalPages = this.props.totalPages
+      , onChangePage = this.props.onChangePage
+      , navLinks = []
     var inactiveStyle = {
       color: 'grey'
     }
     if (currentPage !== 1) {
-      navLinks.push(
-        <span key='prev'><a href="" onClick={clickHandler(onChangePage, prevPage)}>previous page</a> </span>
-    )} else {
-      navLinks.push(
-        <span key='prev' style={inactiveStyle}>previuos page </span>
-    )}
+      navLinks.push(<span key='prev'><a href="" onClick={clickHandler(onChangePage, prevPage)}>previous page</a> </span>)
+    } else {
+      navLinks.push(<span key='prev' style={inactiveStyle}>previuos page </span>)
+    }
     _.range(1, totalPages+1).map(function(pageNum){
       if (pageNum !== currentPage) navLinks.push(<span key={pageNum}><a href="" onClick={clickHandler(onChangePage, pageNum)}>{pageNum}</a> </span>)
       if (pageNum === currentPage) navLinks.push(<span key={pageNum} style={inactiveStyle}>{pageNum} </span>)
     })
     if (currentPage !== totalPages) {
-      navLinks.push(
-        <span key='next'><a href="" onClick={clickHandler(onChangePage, nextPage)}>next page</a> </span>
-    )} else {
-       navLinks.push(
-        <span key='next' style={inactiveStyle}>next page </span>
-      )
+      navLinks.push(<span key='next'><a href="" onClick={clickHandler(onChangePage, nextPage)}>next page</a> </span>)
+    } else {
+       navLinks.push(<span key='next' style={inactiveStyle}>next page </span>)
     }
     return (<div>{navLinks}</div>)
   }
@@ -59,7 +54,6 @@ var Paginator = React.createClass({
     return {currentPage: 1, rows: currentRows}
   },
   onChangePage: function(newPage) {
-    console.log(newPage)
     var currentRows = this.props.rows.slice((newPage-1)*this.props.itemsPerPage, newPage*this.props.itemsPerPage)
     this.setState({currentPage: newPage, rows:currentRows})
   },
