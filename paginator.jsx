@@ -1,10 +1,19 @@
 var React = require('react')
   , _ = require('underscore')
 
+var clickHandler = function(){
+  var fun = _.first(arguments)
+  var params = _.rest(arguments)
+  return function(e){
+    event.preventDefault()
+    fun.apply(null, params)
+  }
+}
+
 var List = React.createClass({
   render: function(){
     var createRow = function(row){
-        return <li>{row.name} {row.surname}</li>
+        return <li key={row.id}>{row.name} {row.surname}</li>
       }
     return <ul>{this.props.rows.map(createRow)}</ul>;
   }
@@ -12,27 +21,55 @@ var List = React.createClass({
 
 var PageLinks = React.createClass({
   render: function(){
-    return (
-      <div><a href="" onClick={this.props.onNextPage}>next page</a></div>
-    )
+    var currentPage = this.props.currentPage
+    var nextPage = this.props.currentPage + 1
+    var prevPage = this.props.currentPage - 1
+    var totalPages = this.props.totalPages
+    var onChangePage = this.props.onChangePage
+    var navLinks = []
+    var inactiveStyle = {
+      color: 'grey'
+    }
+    if (currentPage !== 1) {
+      navLinks.push(
+        <span key='prev'><a href="" onClick={clickHandler(onChangePage, prevPage)}>previous page</a> </span>
+    )} else {
+      navLinks.push(
+        <span key='prev' style={inactiveStyle}>previuos page </span>
+    )}
+    _.range(1, totalPages+1).map(function(pageNum){
+      if (pageNum !== currentPage) navLinks.push(<span key={pageNum}><a href="" onClick={clickHandler(onChangePage, pageNum)}>{pageNum}</a> </span>)
+      if (pageNum === currentPage) navLinks.push(<span key={pageNum} style={inactiveStyle}>{pageNum} </span>)
+    })
+    if (currentPage !== totalPages) {
+      navLinks.push(
+        <span key='next'><a href="" onClick={clickHandler(onChangePage, nextPage)}>next page</a> </span>
+    )} else {
+       navLinks.push(
+        <span key='next' style={inactiveStyle}>next page </span>
+      )
+    }
+    return (<div>{navLinks}</div>)
   }
 })
 
 var Paginator = React.createClass({
   getInitialState: function() {
-    return {currentPage: 1}
+    var currentRows = this.props.rows.slice(0, this.props.itemsPerPage)
+    return {currentPage: 1, rows: currentRows}
   },
-  onNextPage: function(e) {
-    e.preventDefault()
-    console.log(e)
+  onChangePage: function(newPage) {
+    console.log(newPage)
+    var currentRows = this.props.rows.slice((newPage-1)*this.props.itemsPerPage, newPage*this.props.itemsPerPage)
+    this.setState({currentPage: newPage, rows:currentRows})
   },
   render: function(){
-    var currentRows = this.props.rows.slice(0, this.props.itemsPerPage)
+    var totalPages = Math.ceil(this.props.rows.length / this.props.itemsPerPage)
     return (
       <div>
         <h1>Ciao!</h1>
-        <List rows={currentRows} />
-        <PageLinks onNextPage={this.onNextPage} />
+        <List rows={this.state.rows} />
+        <PageLinks onChangePage={this.onChangePage} currentPage={this.state.currentPage} totalPages={totalPages}/>
       </div>
     )
   }

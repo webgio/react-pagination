@@ -1,12 +1,12 @@
 var React = require('react')
   , Paginator = require('./paginator.jsx')
   , rows = [
-              {name: 'Giorgio', surname: 'Bozio'},
-              {name: 'Mario', surname: 'Rossi'},
-              {name: 'Giorgio', surname: 'Bozio'},
-              {name: 'Giorgio', surname: 'Bozio'},
-              {name: 'Giorgio', surname: 'Bozio'},
-              {name: 'Giorgio', surname: 'Bozio'},
+              {id: '01', name: 'Giorgio', surname: 'Bozio'},
+              {id: '02', name: 'Mario', surname: 'Rossi'},
+              {id: '03', name: 'Giorgio', surname: 'Bozio'},
+              {id: '04', name: 'Giorgio', surname: 'Bozio'},
+              {id: '05', name: 'Giorgio', surname: 'Bozio'},
+              {id: '06', name: 'Aldo', surname: 'Bozio'},
             ]
 var component = Paginator({rows: rows, itemsPerPage: '5'})
   
